@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-const Bdd_danger = require('../bdd/Bdd_danger');
 import styles from '../css/csscomponents/cssmap.css'
 
 const options = {
