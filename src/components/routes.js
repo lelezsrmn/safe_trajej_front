@@ -1,6 +1,7 @@
 import Login from "./pages/login";
-import Parametre from ".//pages/parametre"
-import Numero from ".//pages/numero";
+import Parametre from "./pages/parametre";
+import Numero from "./pages/numero";
+import Confidentialite from "./pages/confidentialite";
 
 const routes = [
     {
@@ -14,6 +15,10 @@ const routes = [
     {
         path: "/numero",
         component: Numero,
+    },
+    {
+        path: "/confidentialite",
+        component: Confidentialite
     }
 ];
 
