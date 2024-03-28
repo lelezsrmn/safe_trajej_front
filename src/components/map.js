@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import styles from '../css/csscomponents/cssmap.css'
+import styles from '../css/csscomponents/cssmap.css';
+
+const Bdd_danger = 'safe_trajej_back/bdd/Bdd_danger.js'
+
 
 const options = {
     enableHighAccuracy: true,
