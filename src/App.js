@@ -1,13 +1,21 @@
-import Carte from "./components/map";
-
-import Styles from "./css/App.css";
-import Resultatsearch from "./components/resultatsearch";
+import Carte from "./components/DossMap/Carte"
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Menu from "./components/menu";
+import routes from "./components/routes";
 
 export default function App() {
-  return (
-    <div className="App">
-        <Carte />
-        <Resultatsearch />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Router>
+                <Carte />
+                <Menu /> {/* Assurez-vous que votre composant Menu est correctement implémenté */}
+                <Routes>
+                    {routes.map((route) => (
+                        <Route key={route.path} path={route.path} element={<route.component />} />
+                    ))}
+                </Routes>
+            </Router>
+        </div>
+    );
 }
