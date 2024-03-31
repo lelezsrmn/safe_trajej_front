@@ -30,11 +30,10 @@ export function FormulaireCoordonnees({position}) {
                 <select value={motSelectionne} onChange={handleChangeSelect}>
                     <option value="">Sélectionner un Danger</option>
                     <option value="Homicide">Homicide</option>
-                    <option value="Rape">Rape</option>
-                    <option value="Robbery">Robbery</option>
-                    <option value="Vol">Vol</option>
+                    <option value="Rape">Viol</option>
+                    <option value="Robbery">Vol</option>
                     <option value="Agression">Agression</option>
-                    <option value="PersonneSuspect">Personne Suspect</option>
+                    <option value="PersonneSuspect">Personne Suspecte</option>
                 </select>
                 <p>Le Danger sélectionné est : {motSelectionne}</p>
             </div>
