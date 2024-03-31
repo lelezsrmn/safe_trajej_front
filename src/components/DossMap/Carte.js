@@ -20,18 +20,8 @@ function Carte() {
 
     const [position, setPosition] = useState(null);
     const [marqueurs, setMarqueurs] = useState([]);
-    const [modeMarqueurUnique, setModeMarqueurUnique] = useState(false);
     const [afficherCoordonnees, setAfficherCoordonnees] = useState(false);
 
-    const gererClicCarte = useCallback((evenement) => {
-        if (modeMarqueurUnique) {
-            const nouveauMarqueur = {
-                lat: evenement.latLng.lat(),
-                lng: evenement.latLng.lng(),
-            };
-            setMarqueurs([nouveauMarqueur]);
-        }
-    }, [modeMarqueurUnique]);
 
     const obtenirLocalisation = () => {
         if (navigator.geolocation) {
@@ -55,6 +45,18 @@ function Carte() {
     useEffect(() => {
         obtenirLocalisation();
     }, []);
+    
+    useEffect(() => {
+        if (position) {
+            const url = `http://localhost:3030/danger?position=${position.lat},${position.lng}&distance=10000`
+            fetch(url).then(response => response.json()).then(data => {
+                const dangers = data.map(danger => {
+                    return {lat: danger.position[0], lng: danger.position[1]}
+                })
+                setMarqueurs(dangers)
+            })
+        }
+    }, [position]);
 
     return isLoaded ? (
         <div>
@@ -62,11 +64,9 @@ function Carte() {
                 mapContainerStyle={styleDeConteneur}
                 center={position}
                 zoom={15}
-                onClick={gererClicCarte}
                 options={{styles: styleDeCarteSombre}}
             >
-                {position && !modeMarqueurUnique && <Marker position={position}/>}
-                <Marqueurs marqueurs={marqueurs} />
+                <Marqueurs markers={marqueurs} />
             </GoogleMap>
             <div className={'ContainerSignalisation'}>
                 <div>
