@@ -1,84 +1,119 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import { FormulaireCoordonnees } from './FormulaireCoordonnees';
-import { Marqueurs } from './Marqueurs';
-import { GeolocalisationButton } from './GeolocalisationButton';
-import { styleDeConteneur, styleDeCarteSombre } from './style';
-import { style } from '../../css/csscomponents/cssmap.css'
+import React from 'react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-const options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
+const mapStyles = {
+    width: '72vw',
+    height: '96vh',
+    borderRadius: '20px',
 };
 
-function Carte() {
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyBT-Ae5JMnlCLbX5zi8BViKF40zjCKrx1g"
-    });
+const styleDeCarteSombre = [
+    {
+        elementType: 'geometry',
+        stylers: [{ color: '#1e1e1e' }]
+    },
+    {
+        elementType: 'labels.text.stroke',
+        stylers: [{ color: '#1e1e1e' }]
+    },
+    {
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#e0e0e0' }]
+    },
+    {
+        featureType: 'administrative.locality',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#f5f5f5' }]
+    },
+    {
+        featureType: 'poi',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#f5f5f5' }]
+    },
+    {
+        featureType: 'poi.park',
+        elementType: 'geometry',
+        stylers: [{ color: '#263238' }]
+    },
+    {
+        featureType: 'poi.park',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#90a4ae' }]
+    },
+    {
+        featureType: 'road',
+        elementType: 'geometry',
+        stylers: [{ color: '#424242' }]
+    },
+    {
+        featureType: 'road',
+        elementType: 'geometry.stroke',
+        stylers: [{ color: '#212121' }]
+    },
+    {
+        featureType: 'road',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#ffffff' }]
+    },
+    {
+        featureType: 'road.highway',
+        elementType: 'geometry',
+        stylers: [{ color: '#616161' }]
+    },
+    {
+        featureType: 'road.highway',
+        elementType: 'geometry.stroke',
+        stylers: [{ color: '#212121' }]
+    },
+    {
+        featureType: 'road.highway',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#ffffff' }]
+    },
+    {
+        featureType: 'transit',
+        elementType: 'geometry',
+        stylers: [{ color: '#424242' }]
+    },
+    {
+        featureType: 'transit.station',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#f5f5f5' }]
+    },
+    {
+        featureType: 'water',
+        elementType: 'geometry',
+        stylers: [{ color: '#1e5cad' }]
+    },
+    {
+        featureType: 'water',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#b0bec5' }]
+    },
+    {
+        featureType: 'water',
+        elementType: 'labels.text.stroke',
+        stylers: [{ color: '#0d47a1' }]
+    }
+];
 
-    const [position, setPosition] = useState(null);
-    const [marqueurs, setMarqueurs] = useState([]);
-    const [afficherCoordonnees, setAfficherCoordonnees] = useState(false);
+class MapContainer extends React.Component {
+    render() {
 
 
-    const obtenirLocalisation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    setPosition({
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    });
-                },
-                (erreur) => {
-                    console.log(erreur.message);
-                },
-                options
-            );
-        } else {
-            console.log("La géolocalisation n'est pas prise en charge par votre navigateur");
-        }
-    };
 
-    useEffect(() => {
-        obtenirLocalisation();
-    }, []);
-    
-    useEffect(() => {
-        if (position) {
-            const url = `http://localhost:3030/danger?position=${position.lat},${position.lng}&distance=10000`
-            fetch(url).then(response => response.json()).then(data => {
-                const dangers = data.map(danger => {
-                    return {lat: danger.position[0], lng: danger.position[1]}
-                })
-                setMarqueurs(dangers)
-            })
-        }
-    }, [position]);
-
-    return isLoaded ? (
-        <div>
-            <GoogleMap
-                mapContainerStyle={styleDeConteneur}
-                center={position}
-                zoom={15}
-                options={{styles: styleDeCarteSombre}}
-            >
-                <Marqueurs markers={marqueurs} />
-            </GoogleMap>
-            <div className={'ContainerSignalisation'}>
-                <div>
-                    <button className={'BoutonSignalisation'} onClick={() => setAfficherCoordonnees(!afficherCoordonnees)}>
-                        {afficherCoordonnees ? 'Cacher' : 'Signaler'}
-                    </button>
-                    {afficherCoordonnees && <FormulaireCoordonnees position={position}/>}
-                </div>
-            </div>
-            <GeolocalisationButton />
-        </div>
-    ) : <></>;
+        return (
+            <Map
+                style={mapStyles}
+                styles={styleDeCarteSombre}
+                google={this.props.google}
+                zoom={14}
+                initialCenter={{ lat: 37.7749, lng: -122.4194 }}
+            />
+        );
+    }
 }
 
-export default Carte;
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyCHJVe0sIRXMLDZ_GltmSXVGSU-H0DdRWg'
+})(MapContainer);

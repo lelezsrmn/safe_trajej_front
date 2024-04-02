@@ -1,22 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Login from "../pages/login";
+import "../css/csscomponents/cssmenu.css";
 
 const Menu = () => {
     return (
-        <>
-            <Link to="login">
-                <button>Login</button>
-            </Link>
-            <Link to="/numero">
-                <button>Numéro</button>
-            </Link>
-            <Link to="/">
-                <button>Paramètre</button>
-            </Link>
-        </>
-
+        <div className="menu">
+            <h1 className="titre">SafeTraJeJ</h1>
+        </div>
     );
 };
 
 export default Menu;
-
