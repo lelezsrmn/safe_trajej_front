@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+.ContainerSignalisation {
+    position: absolute;
+
+    width: 12vw;
+    height: 24vh;
+    background-color: rgba(255, 255, 255, 0.47);
+    border-radius: 10%;
+
+    font-family: "Ubuntu", sans-serif;
+    font-weight: bold;
+
+    margin: 1%;
+}
+
+.containerLp {
+    display: flex;
+    margin: 7%;
+}
+
+.carre {
+
+    width: 2vw; /* Définir la largeur */
+    height: 3vh; /* Définir la hauteur */
+    border: 1px solid #212121;
+    margin-right: 4%;
+}
+
+.vol {
+    background-color: #DCDCDCFF;
+}
+
+.agression {
+    background-color: #FF0000FF;
+}
+
+.traficill {
+    background-color: #88421DFF;
+}
+
+.disparition {
+    background-color: #D473D4FF;
+}
+
